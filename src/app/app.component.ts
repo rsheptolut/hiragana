@@ -96,6 +96,9 @@ export class AppComponent implements OnInit {
       }
     }
     this.hiraganaList.sort((a, b) => a.localeCompare(b));
+    if (!this.state.knownHiragana?.length) {
+      this.state.knownHiragana = [ ...this.hiraganaList ];
+    }
   }
 
   public showImage(): void {

@@ -1,18 +1,7 @@
-# Plotting COVID-19
+# Hiragana words
 
 [Live site here](https://rsheptolut.github.io/hiragana/)
 
-A simple app to compare country trajectories in battling COVID-19, with shareable links. Should work on mobile.
+A simple app to learn hiragana by example of 1000+ Japanese basic words from [Wiktionary](https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words).
 
-Uses up-to-date data from [pomber/covid19](https://github.com/pomber/covid19), which in turn is being continuously updated from from Johns Hopkins CSSE [CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19). Uses [Chart.js](https://github.com/chartjs) for its charting needs.
-
-Charts available:
-- Cases (total / new / growth factor),
-- Deaths (total / new / growth factor),
-- Recoveries (total / new / growh factor).
-
-Settings available:
-- Correcting for population,
-- Log / linear scale,
-- Moving average,
-- Starting all curves from same value of cases OR from same date.
+Settings menu allows to pick which Hiragana you know - only words consisting of those hiragana will be shown.
