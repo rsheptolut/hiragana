@@ -1,7 +1,7 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="toolbar">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>settings</mat-icon></button>
-        <h1 class="app-name" (click)="snav.toggle()">Learn words in Hiragana</h1>
+        <h1 class="app-name" (click)="snav.toggle()">Hiragana words</h1>
         <div class="grower"></div>
     </mat-toolbar>
   
@@ -51,8 +51,11 @@
                 <p class="english__word" *ngIf="showEnglish">{{word.english}}</p>
             </div>
             <div class="kanji">
-                <a href="#" (click)="showKanji = true" *ngIf="!showKanji">(show Kanji)</a>
+                <a href="#" (click)="showKanji = true" *ngIf="!showKanji && word.kanji && word.kanji.trim()">(show Kanji)</a>
                 <p class="kanji__word" *ngIf="showKanji">{{word.kanji}}</p>
+            </div>
+            <div class="kanji">
+                <a href="#" (click)="showImage()">(show image)</a>
             </div>
             <br/><br/><br/><br/>
             <button mat-button (click)="showNextWord()">Next word</button>

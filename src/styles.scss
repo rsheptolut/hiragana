@@ -8,6 +8,10 @@ html, body { height: 100%; }
 
 body { 
     margin: 0; 
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    font-family: "ヒラギノ角ゴ Pro W3", "Microsoft YaHei", Osaka, STXihei, STHeiti, Roboto, "Helvetica Neue", sans-serif; 
     box-sizing: border-box;
+}
+
+.mat-body, .mat-body-1, .mat-typography {
+    font-family: "ヒラギノ角ゴ Pro W3", "Microsoft YaHei", Osaka, STXihei, STHeiti, Roboto, "Helvetica Neue", sans-serif; 
 }

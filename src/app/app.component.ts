@@ -4,8 +4,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Word } from './word';
 
-declare let ga: Function;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -41,14 +39,6 @@ export class AppComponent implements OnInit {
     this.portraitQuery = media.matchMedia('(orientation: portrait)');
     this.portraitQueryListener = () => changeDetectorRef.detectChanges();
     this.portraitQuery.addListener(this.portraitQueryListener);
-
-    // subscribe to router events and send page views to Google Analytics
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        ga('set', 'page', event.urlAfterRedirects);
-        ga('send', 'pageview');
-      }
-    });
   }
 
   public async ngOnInit(): Promise<void> {
@@ -106,6 +96,10 @@ export class AppComponent implements OnInit {
       }
     }
     this.hiraganaList.sort((a, b) => a.localeCompare(b));
+  }
+
+  public showImage(): void {
+    window.open("https://www.google.com/search?q=" + (this.word.kanji ?? this.word.kana) + "&newwindow=1&source=lnms&tbm=isch&sa=X");
   }
 
   public async showNextWord(): Promise<void> {
