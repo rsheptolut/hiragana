@@ -21,41 +21,10 @@
     align-items: baseline;
 }
 
-.msg {
-    font-size: 1rem;
-    margin: 0;
-    transition: opacity 2s;
-    opacity: 0;
-    flex-shrink: 999;
-    min-width: 0;
-    text-align: right;
-    flex-basis: 0;
-    flex-grow: 999;
-
-    &--visible {
-        transition: opacity 0s;
-        opacity: 1;
-    }
-}
-
 .grower {
     flex-grow: 999;
 }
 
-.chart {
-    position: relative;
-    width: calc(100vw - 1rem);
-    height: calc(100vh - 10rem);
-    margin: 0 0 1rem 0;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-@media screen and (orientation:landscape) {
-    .chart {
-        height: calc(100vh - 8rem);
-    }
-}
 
 .inline {
     margin: 0 1rem;
@@ -84,14 +53,6 @@
     cursor: pointer;
 }
 
-.page-title {
-    font-size: 1rem;
-    flex-shrink: 999;
-    overflow-x: hidden;
-    cursor: pointer;
-    text-overflow: ellipsis;
-}
-  
 .example-sidenav-container {
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
@@ -104,12 +65,37 @@
     flex: 1 0 auto;
 }
   
-canvas {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-.portrait-notice {
+.main-panel {
     text-align: center;
+    a {
+        color: gray;
+        font-size: 0.8rem;
+        text-decoration: none;
+    }
+
+    .kana {
+        margin: 4rem 0 0 0;
+        &__word {
+            font-size: 3rem;
+        }
+    }
+
+    .romanji {
+        margin: 4rem 0 0 0;
+    }
+
+    .english {
+        margin: 4rem 0 0 0;
+        &__word {
+            font-style: italic;
+            font-size: 1.3rem;
+        }
+    }
+
+    .kanji {
+        margin: 4rem 0 0 0;
+        &__word {
+            font-size: 3rem;
+        }
+    }
 }

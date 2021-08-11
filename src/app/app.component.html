@@ -1,11 +1,8 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="toolbar">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>settings</mat-icon></button>
-        <h1 class="app-name" (click)="snav.toggle()">Plotting COVID-19</h1>
-        <span class="page-title" (click)="snav.toggle()">{{mobileQuery.matches && copiedAnimation ? "Url copied!" : getTitle()}}</span>
+        <h1 class="app-name" (click)="snav.toggle()">Learn words in Hiragana</h1>
         <div class="grower"></div>
-        <p class="msg" *ngIf="!mobileQuery.matches" [class.msg--visible]="copiedAnimation">Url copied!</p>
-        <button mat-icon-button (click)="copyLink()" class="non-shrinker"><mat-icon>share</mat-icon></button>
     </mat-toolbar>
   
     <mat-sidenav-container class="example-sidenav-container"
@@ -15,46 +12,16 @@
             <div class="settings" *ngIf="state">
                 <div class="settings__header">
                     <h2>Settings</h2>
-                    <button mat-icon-button (click)="clearSettings()"><mat-icon>refresh</mat-icon></button>
+                    <!-- <button mat-icon-button (click)="clearSettings()"><mat-icon>refresh</mat-icon></button> -->
                 </div>
 
-                <mat-form-field>
-                    <mat-label>Dataset</mat-label>
-                    <mat-select [(ngModel)]="state.dataset" (selectionChange)="datasetChange()">
-                        <mat-option *ngFor="let option of datasetOptions" [value]="option.value">{{option.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <h3>Known kana</h3>
 
-                <mat-form-field>
-                    <mat-label>Chart type</mat-label>
-                    <mat-select [(ngModel)]="state.chartType" (selectionChange)="settingChange()">
-                        <mat-option *ngFor="let option of chartTypeOptions" [value]="option">{{option}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                
-                <mat-form-field>
-                    <mat-label>Countries</mat-label>
-                    <mat-select [(ngModel)]="state.selectedCountries" multiple (selectionChange)="settingChange()">
-                    <mat-option *ngFor="let country of countryOptions" [value]="country">{{country}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <p>Tip: Hide countries by clicking on their color legend</p>
-        
-                
-                <div class="row">
-                    <mat-checkbox [(ngModel)]="state.log" (ngModelChange)="settingChange()" [disabled]="state.chartType === chartTypes.CasesGrowth || state.chartType === chartTypes.DeathGrowth">Logarithmic</mat-checkbox>
+                <div class="row" *ngFor="let h of hiraganaList">
+                    <mat-checkbox [ngModel]="getHiraganaSetting(h)" (ngModelChange)="setHiraganaSetting(h, $event)">{{h}}</mat-checkbox>
                 </div>
         
-                <div class="row">
-                    <mat-checkbox [(ngModel)]="state.average" (ngModelChange)="settingChange()">Moving average</mat-checkbox>
-                    <div class="grower"></div>
-                    <mat-form-field class="inline">
-                        <mat-label>Days</mat-label>
-                        <input matInput [(ngModel)]="samples" (ngModelChange)="settingChange()" type="number" min="1" max="28">
-                    </mat-form-field>
-                </div>
-        
-                <div class="row">
+                <!-- <div class="row">
                     <mat-checkbox [(ngModel)]="state.normalize" (ngModelChange)="normalizeChange()">Population-relative</mat-checkbox>
                     
                     <div class="grower"></div>
@@ -62,46 +29,34 @@
                         <mat-label>Per this population:</mat-label>
                         <input matInput [(ngModel)]="state.normalizePopulation" (ngModelChange)="settingChange()" type="number" min="1" max="10000000000">
                     </mat-form-field>
-                </div>
+                </div> -->
 
-                <mat-radio-group name="startFrom" [(ngModel)]="state.startFrom" (ngModelChange)="settingChange()">
-                    <p>Start each curve at:</p>
-                    <div class="row">
-                        <mat-radio-button name="startFrom" value="2" value="date">Same date</mat-radio-button>
-                        <div class="grower"></div>
-                        <mat-form-field class="inline" (click)="dateChange()">
-                            <mat-label>Start date</mat-label>
-                            <input matInput [matDatepicker]="picker" [(ngModel)]="state.startDate" (ngModelChange)="dateChange()">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker [attr.touchUi]="mobileQuery.matches" #picker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-            
-                    <div class="row">
-                        <mat-radio-button name="startFrom" value="value">Same Y value</mat-radio-button>
-                        
-                        <div class="grower"></div>
-                        <mat-form-field class="inline" (click)="offsetChange()">
-                            <mat-label>Y value</mat-label>
-                            <input matInput [(ngModel)]="state.startValue" (ngModelChange)="offsetChange()" type="number" min="1" max="10000">
-                        </mat-form-field>
-                        <p></p>
-                    </div>
-                </mat-radio-group>
-        
                 <h2>Sources</h2>
-                <p *ngIf="state.dataset === 'JHU'"><a href="https://github.com/pomber/covid19">COVID case data</a>{{mainUpdatedStr}}</p>
-                <p *ngIf="state.dataset === 'ECDC'"><a href="https://github.com/owid/covid-19-data">COVID case data</a>{{mainUpdatedStr}}</p>
-                <p><a href="https://github.com/samayo/country-json">Population data</a></p>
+                <p><a href="https://en.wiktionary.org/wiki/Appendix:1000_Japanese_basic_words">Wikitionary</a></p>
                 <p><a href="https://github.com/rsheptolut/hiragana">Source code for this app</a></p>
             </div>
         </mat-sidenav>
-    
-        <mat-sidenav-content>
-            <div class="chart">
-                <canvas #chart></canvas>
+
+        <div class="main-panel">
+            <div class="kana">
+                <a href="#" (click)="showKana = true" *ngIf="!showKana">(show Kana)</a>
+                <p class="kana__word" *ngIf="showKana">{{word.kana}}</p>
             </div>
-            <p class="portrait-notice" *ngIf="mobileQuery.matches && portraitQuery.matches">Landscape orientation recommended for viewing.</p>
-        </mat-sidenav-content>
+            <div class="romanji">
+                <a href="#" (click)="showRomanji = true" *ngIf="!showRomanji">(show Romanji)</a>
+                <p class="romanji__word" *ngIf="showRomanji">{{word.romanji}}</p>
+            </div>
+            <div class="english">
+                <a href="#" (click)="showEnglish = true" *ngIf="!showEnglish">(show English)</a>
+                <p class="english__word" *ngIf="showEnglish">{{word.english}}</p>
+            </div>
+            <div class="kanji">
+                <a href="#" (click)="showKanji = true" *ngIf="!showKanji">(show Kanji)</a>
+                <p class="kanji__word" *ngIf="showKanji">{{word.kanji}}</p>
+            </div>
+            <br/><br/><br/><br/>
+            <button mat-button (click)="showNextWord()">Next word</button>
+        </div>
+    
     </mat-sidenav-container>
 </div>
